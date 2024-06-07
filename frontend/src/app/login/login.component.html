@@ -4,12 +4,14 @@
     </div>
 
     <div class="form-login">
-        <form action="">
+        <form [formGroup]="loginForm" (ngSubmit)="loginCliente()">
           <label for="email">Email</label>
-          <input type="text" id="email">
+          <input type="text" id="email" formControlName="email">
           
-          <label for="password">Password</label>
-          <input type="password" id="password">
+          <label for="contrasenia">Password</label>
+          <input type="password" id="contrasenia" formControlName="contrasenia">
+
+          <button type="submit" class="btn-login">Iniciar sesion</button>
         </form>
       </div>
       

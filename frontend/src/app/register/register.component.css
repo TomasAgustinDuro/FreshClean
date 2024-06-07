@@ -15,3 +15,7 @@
     width: 75%;
     margin: auto;
 }
+
+.btn-registrar{
+    border: solid 1px red;
+}

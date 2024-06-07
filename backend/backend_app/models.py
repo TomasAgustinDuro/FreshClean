@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import check_password
 
 class Usuario(models.Model):
     usuarioid = models.AutoField(primary_key=True)

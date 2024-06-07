@@ -1,4 +1,8 @@
+import json
+from django.http import JsonResponse
 from django.shortcuts import render
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import Categoria, Producto, Usuario,Subcategoria,Pedido, Inventario, Carrito
 
@@ -75,32 +79,62 @@ def productos_por_subcategoria(request, subcategoria_id):
     return render (request, 'listar_producto.html', {'productos': productos})
 
 # Usuario
+
+from django.core import serializers
+
+@csrf_exempt
 def registrar_usuario(request):
     if request.method == 'POST':
-        nombre = request.POST['nombre']
-        apellido = request.POST['apellido']
-        email = request.POST['email']
-        contrasenia = request.POST['contrasenia']
-        direccion = request.POST['direccion']
-        telefono = request.POST['telefono']
+        data = json.loads(request.body)
+        nombre = data.get('nombre')
+        apellido = data.get('apellido')
+        email = data.get('email')
+        contrasenia = data.get('contrasenia')
+        direccion = data.get('direccion')
+        telefono = data.get('telefono')
+        
+        # Resto del código para procesar los datos y registrar al usuario
+
         Usuario.registrar_usuario(nombre, apellido, email, contrasenia, direccion, telefono)
-        return redirect('obtener_usuarios')
-    
-    return render(request, 'register')
 
+        # Obtener la lista actualizada de usuarios
+        usuarios = Usuario.listar_usuarios()
+
+        # Serializar los datos de los usuarios en formato JSON
+        usuarios_json = serializers.serialize('json', usuarios)
+
+        # Ejemplo de respuesta JSON con el mensaje y la lista actualizada de usuarios
+        response_data = {'mensaje': 'Usuario registrado exitosamente', 'usuarios': usuarios_json}
+        return JsonResponse(response_data)
+    else:
+        return JsonResponse({'mensaje': 'Método no permitido'}, status=405)
+        
 def obtener_usuarios(request):
-    usuarios = Usuario.listar_usuarios()
-    return render (request, 'usuarios.html', {'usuarios': usuarios})
+    usuarios = Usuario.listar_usuarios() 
+    for usuario in usuarios:
+        print(usuario.nombre, usuario.apellido, usuario.email)  # Imprimir en la consola los datos del usuario
+    return JsonResponse({'mensaje': 'Usuarios obtenidos con éxito'})
 
+from django.contrib.auth import authenticate
+
+@csrf_exempt
 def iniciar_sesion(request):
     if request.method == 'POST':
-        email = request.POST['email']
-        contrasenia = request.POST['contrasenia']
-        Usuario.iniciar_sesion(email, contrasenia)
-        return redirect('informacion_usuario')
-    
-    return render(request, 'informacion_usuario.html')
+        try:
+            body = json.loads(request.body)
+            email = body.get('email')
+            contrasenia = body.get('contrasenia')
+            print(email, contrasenia)
 
+            usuario = Usuario.iniciar_sesion(email, contrasenia)
+            if usuario is not None:
+                return JsonResponse({'mensaje': 'Login exitoso', 'usuario': usuario.email})
+            else:
+                return JsonResponse({'mensaje': 'Credenciales incorrectas'}, status=400)
+        except json.JSONDecodeError:
+            return JsonResponse({'mensaje': 'JSON inválido'}, status=400)
+    else:
+        return JsonResponse({'mensaje': 'Método no permitido'}, status=405)
 def informacion_usuario(request, usuario_id):
     usuario = Usuario.mostrar_informacion(usuario_id)
     return render (request, 'informacion_usuario.html', {'usuario': usuario})
