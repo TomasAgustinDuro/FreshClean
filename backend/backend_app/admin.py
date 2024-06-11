@@ -1,13 +1,9 @@
+# backend_app/admin.py
 from django.contrib import admin
+from .models import Usuario
 
-# from backend.backend_app.models import Usuario, Categoria, Subcategoria, Producto, Pedido, Inventario, Pago, Transacciones, Carrito
-
-# admin.site.register(Usuario)
-# admin.site.register(Categoria)
-# admin.site.register(Subcategoria)
-# admin.site.register(Producto)
-# admin.site.register(Pedido)
-# admin.site.register(Inventario)
-# admin.site.register(Pago)
-# admin.site.register(Transacciones)
-# admin.site.register(Carrito)
+@admin.register(Usuario)
+class UsuarioAdmin(admin.ModelAdmin):
+    list_display = ['usuarioid', 'nombre', 'apellido', 'email', 'direccion', 'telefono', 'fecha_de_registro', 'is_staff']
+    search_fields = ['nombre', 'apellido', 'email']
+    list_filter = ['is_staff', 'fecha_de_registro']

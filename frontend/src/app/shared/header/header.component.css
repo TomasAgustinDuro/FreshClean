@@ -10,12 +10,23 @@ nav {
     font-weight: bold;
 }
 
+.navbar{
+    display: flex;
+    background-color: #FFD700;
+    border-radius: 10px;
+    margin: 0;
+}
+
+.navbar .icon{
+    width: 5%;
+    margin: auto 1em;
+    cursor: pointer;
+    color: #000;
+}
+
 .navbar ul {
     list-style: none;
     display: flex;
-    margin: 0;
-    background-color: #FFD700;
-    border-radius: 10px;
 }
 
 .navbar li {

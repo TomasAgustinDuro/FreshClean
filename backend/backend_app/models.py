@@ -11,6 +11,7 @@ class Usuario(models.Model):
     direccion = models.CharField(max_length=45)
     telefono = models.CharField(max_length=45)
     fecha_de_registro = models.DateTimeField(auto_now_add=True)
+    is_staff = models.BooleanField(default=False)
 
     @classmethod
     def registrar_usuario(cls, nombre, apellido, email, contrasenia, direccion, telefono):
