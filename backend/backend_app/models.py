@@ -28,10 +28,14 @@ class Usuario(models.Model):
 
     @classmethod
     def iniciar_sesion(cls, email, contrasenia):
-        # Esto filtra a los usuarios por su email
+        print(email)
+        print(contrasenia)
         usuario = cls.objects.filter(email = email).first()
-        # Si usuario y la contraseña son correctas comparandolo con la DB retorna usuario
+        
+        print('este es el usuario' + str(usuario))
+
         if usuario and check_password(contrasenia, usuario.contrasenia):
+            print('todo ok ')
             return usuario
         return None
     

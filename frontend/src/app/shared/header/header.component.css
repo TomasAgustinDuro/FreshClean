@@ -1,29 +1,82 @@
 nav {
     display: flex;
     justify-content: space-between;
-}
-
-nav .logo {
-    background-color: grey;
-    color: white;
-    display: flex;
-    justify-content: center;
     align-items: center;
-    padding: 1em;
-    border-radius: 10px;
+    padding: .7em;
 }
 
-nav .navbar ul{
-    display: flex;
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.navbar ul {
     list-style: none;
-    text-decoration: none;
-    flex-direction: row;
-    margin: auto;
-    padding: 1em;
-    border-radius: 10px;
+    display: flex;
+    margin: 0;
     background-color: #FFD700;
+    border-radius: 10px;
 }
 
-nav .navbar ul li {
-    margin: auto 1em;
+.navbar li {
+    margin-left: 20px;
+    padding: 1em;
+    color: black;
+}
+
+.navbar li:hover{
+    background-color:         #CCA600;
+}
+
+.burger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.burger div {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 4px;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        background-color: #FFFACD
+    }
+
+    .navbar ul {
+        flex-direction: column;
+        color: black;
+    }
+
+    .navbar li {
+        text-align: center;
+        margin: 1em;
+        padding: .5em;
+        font-weight: bold;
+    }
+
+    .burger {
+        display: flex;
+        background-color: #FFD700;
+        padding: .2em .5em;
+        border-radius: 5px;
+    }
+
+    .burger div{
+        background-color: black;
+        border-radius: 10px;
+    }
+
+    .navbar.active {
+        display: flex;
+    }
 }

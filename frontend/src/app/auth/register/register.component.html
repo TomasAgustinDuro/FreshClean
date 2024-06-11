@@ -1,0 +1,39 @@
+<section>
+  <div class="titulo-register">
+    <h2>Registro</h2>
+  </div>
+
+  <div class="form-register">
+    <form [formGroup]="registroForm" (ngSubmit)="registrarCliente()">
+      <input type="text" id="nombre" formControlName="nombre" placeholder="Nombre" />
+
+      <input type="text" id="apellido" placeholder="Apellido" formControlName="apellido" />
+
+      <input type="email" id="email" placeholder="Email" formControlName="email" />
+      <div class="mostrar-container">
+        <div class="input-wrapper">
+          <input
+            type="password"
+            id="contrasenia"
+            formControlName="contrasenia"
+            placeholder="Contraseña"
+          />
+          <div class="toggle-button">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round" (click)="mostrarContrasenia()">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+              <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+            </svg>
+          </div>
+        </div>
+      </div>
+      
+
+      <input type="text" id="direccion" placeholder="Direccion" formControlName="direccion" />
+
+      <input type="text" id="telefono" placeholder="Telefono" formControlName="telefono" />
+
+      <button class="btn-registrar" type="submit">Registrarse</button>
+    </form>
+  </div>
+</section>

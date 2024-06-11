@@ -127,6 +127,7 @@ def iniciar_sesion(request):
             print(email, contrasenia)
 
             usuario = Usuario.iniciar_sesion(email, contrasenia)
+            print('usuario en views' + str(usuario))
             if usuario is not None:
                 return JsonResponse({'mensaje': 'Login exitoso', 'usuario': usuario.email})
             else:
@@ -135,6 +136,7 @@ def iniciar_sesion(request):
             return JsonResponse({'mensaje': 'JSON inválido'}, status=400)
     else:
         return JsonResponse({'mensaje': 'Método no permitido'}, status=405)
+    
 def informacion_usuario(request, usuario_id):
     usuario = Usuario.mostrar_informacion(usuario_id)
     return render (request, 'informacion_usuario.html', {'usuario': usuario})
