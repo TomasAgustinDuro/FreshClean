@@ -12,6 +12,7 @@ class Usuario(models.Model):
     telefono = models.CharField(max_length=45)
     fecha_de_registro = models.DateTimeField(auto_now_add=True)
     is_staff = models.BooleanField(default=False)
+    is_online = models.BooleanField(default=False)
 
     @classmethod
     def registrar_usuario(cls, nombre, apellido, email, contrasenia, direccion, telefono):
@@ -29,20 +30,27 @@ class Usuario(models.Model):
 
     @classmethod
     def iniciar_sesion(cls, email, contrasenia):
-        print(email)
-        print(contrasenia)
         usuario = cls.objects.filter(email = email).first()
-        
-        print('este es el usuario' + str(usuario))
+    
+        if usuario and check_password(contrasenia, usuario.contrasenia) and usuario.is_online == False :
+            usuario.is_online = True
+            usuario.save()  # Guardar el cambio en la base de datos
+            return usuario
+        return None
 
-        if usuario and check_password(contrasenia, usuario.contrasenia):
-            print('todo ok ')
+    @classmethod
+    def cerrar_sesion(cls, email):
+        usuario = cls.objects.filter(email = email).first()
+        print (usuario)
+        if usuario and usuario.is_online == True:
+            usuario.is_online = False
+            usuario.save()
             return usuario
         return None
     
     @classmethod
-    def obtener_usuario(cls, usuario_id):
-        return cls.objects.get(usuarioid=usuario_id)
+    def obtener_usuario(cls, email):
+        return cls.objects.get(email=email)
     
     @classmethod
     def actualizar_perfil(cls, usuario_id, nombre, apellido, direccion, telefono):

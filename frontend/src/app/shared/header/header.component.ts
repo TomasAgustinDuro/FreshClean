@@ -1,22 +1,50 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService, Online } from '../../core/services/auth.service';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Observable, Subscription, tap } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
-  standalone: true
+  imports: [CommonModule],
+  standalone: true,
 })
 export class HeaderComponent implements OnInit {
+  public isOnline: boolean | undefined; 
+  private dataSubscription: Subscription | undefined;
 
-  constructor() { }
+  constructor(private authAPI: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    const burger = document.querySelector('.burger') as HTMLElement; // Cast a HTMLElement
-    const navbar = document.querySelector('.navbar') as HTMLElement; // Cast a HTMLElement
+    this.dataSubscription = this.authAPI.authObservable
+      .pipe(
+        tap((data) => {
+          this.isOnline = data.isOnline; 
+          console.log('isOnline:', this.isOnline); 
+        })
+      )
+      .subscribe();
+  }
 
-    burger.addEventListener('click', () => {
-      navbar.classList.toggle('active');
+  logout(): void {
+    this.authAPI.logOutCliente().subscribe({
+      next: (response: any) => {
+        console.log(response);
+        this.router.navigate(['']);
+      },
+      error: (error: any) => {
+        console.error(error);
+      },
     });
   }
 
+  navigateToProfile(): void {
+    this.router.navigate(['pages/profile/']);
+  }
+
+  navigateToLogin(): void {
+    this.router.navigate(['/login']);
+  }
 }

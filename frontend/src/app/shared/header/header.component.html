@@ -15,41 +15,50 @@
       <li><a href="#">Nosotros</a></li>
       <li><a href="#">Contacto</a></li>
     </ul>
-
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="icon icon-tabler icon-tabler-shopping-cart"
-      width="44"
-      height="44"
-      viewBox="0 0 24 24"
-      stroke-width="1.5"
-      stroke="#000000"
-      fill="none"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    >
-      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-      <path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-      <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-      <path d="M17 17h-11v-14h-2" />
-      <path d="M6 5l14 1l-1 7h-13" />
-    </svg>
-
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="icon icon-tabler icon-tabler-user"
-      width="44"
-      height="44"
-      viewBox="0 0 24 24"
-      stroke-width="1.5"
-      stroke="#000000"
-      fill="none"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    >
-      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-      <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-      <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-    </svg>
   </div>
 </nav>
+
+<div class="postNavBar">
+  <div>buscador</div>
+
+  <div class="postNavBar-usuario">
+    <div>
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shopping-cart" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        <path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+        <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+        <path d="M17 17h-11v-14h-2" />
+        <path d="M6 5l14 1l-1 7h-13" />
+      </svg>
+    </div>
+
+    <!-- Con usuario -->
+    <div class="usuario-icon">
+      <div *ngIf="isOnline" (click)="navigateToProfile()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-filled" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+          <path d="M12 2a5 5 0 1 1 -5 5l.005 -.217a5 5 0 0 1 4.995 -4.783z" stroke-width="0" fill="currentColor" />
+          <path d="M14 14a5 5 0 0 1 5 5v1a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-1a5 5 0 0 1 5 -5h4z" stroke-width="0" fill="currentColor" />
+        </svg>
+      </div>
+    
+      <!-- Sin usuario -->
+      <div *ngIf="!isOnline" (click)="navigateToLogin()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+          <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+          <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+        </svg>
+      </div>
+    </div>
+  
+    <div class="log-out" *ngIf="isOnline" (click)="logout()">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+        <path d="M9 12h12l-3 -3" />
+        <path d="M18 15l3 -3" />
+      </svg>
+      
+    </div>  
+</div>

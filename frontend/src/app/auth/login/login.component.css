@@ -7,6 +7,9 @@
     border-radius: 10px;
 }
 
+.form-login {
+  text-align: center;
+}
 
 .form-login form {
     display: flex;
@@ -24,7 +27,7 @@
     border-radius: 0;
     text-align: center;
   }
-  
+
   .mostrar-container {
     position: relative;
   }

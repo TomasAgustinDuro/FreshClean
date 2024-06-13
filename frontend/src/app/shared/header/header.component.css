@@ -17,12 +17,6 @@ nav {
     margin: 0;
 }
 
-.navbar .icon{
-    width: 5%;
-    margin: auto 1em;
-    cursor: pointer;
-    color: #000;
-}
 
 .navbar ul {
     list-style: none;
@@ -50,6 +44,24 @@ nav {
     height: 3px;
     background-color: white;
     margin: 4px;
+}
+
+.postNavBar{
+    display: flex;
+    padding: 1em;
+    background-color:  #FFFACD;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.postNavBar .icon{
+    margin: auto .2em;
+    cursor: pointer;
+    color: #000;
+}
+
+.postNavBar .postNavBar-usuario{
+    display: flex;
 }
 
 @media (max-width: 768px) {

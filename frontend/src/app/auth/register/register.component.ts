@@ -10,6 +10,7 @@ import { BackendApiService } from '../../core/services/backend-api.service';
 import { Usuario } from '../../core/models/usuario';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -23,7 +24,7 @@ export class RegisterComponent {
 
   constructor(
     private fb: FormBuilder,
-    private backendApi: BackendApiService,
+    private authAPI: AuthService,
     private router: Router,
     private toastr: ToastrService
   ) {
@@ -98,7 +99,7 @@ export class RegisterComponent {
     } else {
       const usuario: Usuario = this.registroForm.value;
       console.log(usuario);
-      this.backendApi.registrarCliente(usuario).subscribe({
+      this.authAPI.registrarCliente(usuario).subscribe({
         next: (response: any) => {
           console.log('Registro exitoso', response);
           this.router.navigate(['/login']);

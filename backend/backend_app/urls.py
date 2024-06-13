@@ -6,6 +6,8 @@ urlpatterns = [
     # Usuarios
     path('usuarios/registrar/', views.registrar_usuario, name='registrar_usuario'),
     path('usuarios/iniciar_sesion/', views.iniciar_sesion, name='iniciar_sesion'),
+    path('usuarios/obtener_usuario/<int:email>/', views.obtener_usuario, name='obtener_usuario'),   
+    path('usuarios/cerrar_sesion', views.cerrar_sesion, name="cerrar_sesion"),
     # path('usuarios/perfil/<int:usuario_id>/', views.ver_perfil, name='ver_perfil'),
     # path('usuarios/editar/<int:usuario_id>/', views.editar_perfil, name='editar_perfil'),
 

@@ -7,11 +7,14 @@ import {
 } from '@angular/forms';
 import { BackendApiService } from '../../core/services/backend-api.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
@@ -20,8 +23,9 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private api: BackendApiService,
-    private toastr: ToastrService
+    private authAPI: AuthService,
+    private toastr: ToastrService,
+    private router: Router,
   ) {
     this.loginForm = this.fb.group({
       email: ['', Validators.required],
@@ -65,12 +69,12 @@ export class LoginComponent {
       const values = this.loginForm.value;
       const email = values.email;
       const contrasenia = values.contrasenia;
-      console.log(email, contrasenia);
 
-      this.api.loginCliente(email, contrasenia).subscribe({
+      this.authAPI.loginCliente(email, contrasenia).subscribe({
         next: (response: any) => {
           console.log('Login Exitoso', response);
           this.showSuccess('Sesion iniciada correctamente')
+          this.router.navigate(['pages/profile']);
         },
         error: (error: any) => {
           console.error('Error en el login', error);
@@ -81,11 +85,10 @@ export class LoginComponent {
   }
 
   mostrarContrasenia() {
-    // Asegúrate de que el elemento existe y es un HTMLInputElement
     const inputContrasenia = document.getElementById(
       'contrasenia'
     ) as HTMLInputElement | null;
-    const icon = document.querySelector('.icon') as HTMLElement | null;
+    const icon = document.querySelector('.icon-tabler-eye') as HTMLElement | null;
 
     if (!inputContrasenia || !icon) {
       return;
@@ -102,7 +105,7 @@ export class LoginComponent {
     } else {
       inputContrasenia.type = 'password';
       icon.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-closed" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round" (click)="mostrarContrasenia()>
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye icon-tabler-eye-closed" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round" (click)="mostrarContrasenia()>
   <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
   <path d="M21 9c-2.4 2.667 -5.4 4 -9 4c-3.6 0 -6.6 -1.333 -9 -4" />
   <path d="M3 15l2.5 -3.8" />
@@ -113,4 +116,6 @@ export class LoginComponent {
       `;
     }
   }
+
+  
 }

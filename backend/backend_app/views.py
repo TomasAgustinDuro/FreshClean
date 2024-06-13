@@ -80,8 +80,6 @@ def productos_por_subcategoria(request, subcategoria_id):
 
 # Usuario
 
-from django.core import serializers
-
 @csrf_exempt
 def registrar_usuario(request):
     if request.method == 'POST':
@@ -93,18 +91,10 @@ def registrar_usuario(request):
         direccion = data.get('direccion')
         telefono = data.get('telefono')
         
-        # Resto del código para procesar los datos y registrar al usuario
-
         Usuario.registrar_usuario(nombre, apellido, email, contrasenia, direccion, telefono)
 
-        # Obtener la lista actualizada de usuarios
-        usuarios = Usuario.listar_usuarios()
-
-        # Serializar los datos de los usuarios en formato JSON
-        usuarios_json = serializers.serialize('json', usuarios)
-
         # Ejemplo de respuesta JSON con el mensaje y la lista actualizada de usuarios
-        response_data = {'mensaje': 'Usuario registrado exitosamente', 'usuarios': usuarios_json}
+        response_data = {'mensaje': 'Usuario registrado exitosamente'}
         return JsonResponse(response_data)
     else:
         return JsonResponse({'mensaje': 'Método no permitido'}, status=405)
@@ -115,7 +105,25 @@ def obtener_usuarios(request):
         print(usuario.nombre, usuario.apellido, usuario.email)  # Imprimir en la consola los datos del usuario
     return JsonResponse({'mensaje': 'Usuarios obtenidos con éxito'})
 
-from django.contrib.auth import authenticate
+@csrf_exempt
+def obtener_usuario(email):
+    try:
+        usuario = Usuario.obtener_usuario(email)
+
+        usuario_info = {
+            'nombre': usuario.nombre,
+            'apellido': usuario.apellido,
+            'email':usuario.email,
+            'contraseña':usuario.contrasenia,
+            'is_online':usuario.is_online
+        }
+
+        return JsonResponse(usuario_info)
+    
+    except Usuario.DoesNotExist:
+        return JsonResponse({
+            'error': 'Usuario no encontrado'
+        }, status=404)
 
 @csrf_exempt
 def iniciar_sesion(request):
@@ -124,10 +132,8 @@ def iniciar_sesion(request):
             body = json.loads(request.body)
             email = body.get('email')
             contrasenia = body.get('contrasenia')
-            print(email, contrasenia)
 
             usuario = Usuario.iniciar_sesion(email, contrasenia)
-            print('usuario en views' + str(usuario))
             if usuario is not None:
                 return JsonResponse({'mensaje': 'Login exitoso', 'usuario': usuario.email})
             else:
@@ -136,7 +142,30 @@ def iniciar_sesion(request):
             return JsonResponse({'mensaje': 'JSON inválido'}, status=400)
     else:
         return JsonResponse({'mensaje': 'Método no permitido'}, status=405)
+
+@csrf_exempt 
+def cerrar_sesion(request):
+    if request.method == 'POST':
+        try: 
+            body_unicode = request.body.decode('utf-8')
+            front = json.loads(body_unicode)
+            email = front.get('email')
+            
+            print (email)
+            
+            usuario = Usuario.cerrar_sesion(email)
+            
+            if usuario is not None:
+                return JsonResponse({'mensaje': 'Cerro sesion exitosamente', 'usuario': usuario.email})
+            else:
+                return JsonResponse({'mensaje': 'Problemas al cerrar sesion'}, status=400)
+        except json.JSONDecodeError:
+            return JsonResponse({'mensaje': 'JSON inválido'}, status=400)
+    else:
+        return JsonResponse({'mensaje': 'Método no permitido'}, status=405)
+            
     
+      
 def informacion_usuario(request, usuario_id):
     usuario = Usuario.mostrar_informacion(usuario_id)
     return render (request, 'informacion_usuario.html', {'usuario': usuario})

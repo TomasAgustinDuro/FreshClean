@@ -5,4 +5,6 @@ export interface Usuario {
     contrasenia: string;
     telefono:string;
     direccion:string;
+    is_staff:boolean;
+    is_login:boolean;
 }
