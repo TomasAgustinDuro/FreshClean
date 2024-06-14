@@ -5,7 +5,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { BackendApiService } from '../../core/services/backend-api.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';

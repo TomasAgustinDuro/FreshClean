@@ -1,0 +1,40 @@
+.informacion-usuario {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: auto;
+}
+
+.informacion-usuario p {
+  margin: 0.5em auto;
+}
+
+h2 {
+  background-color: #ffd700;
+  width: 75%;
+  margin: 1em auto;
+  text-align: center;
+  padding: 0.5em;
+  border-radius: 10px;
+}
+
+.mod-info {
+  width: 50%;
+  text-align: center;
+  margin: 1em auto;
+  font-size: 1em;
+  background-color: #fffacd;
+  border: 1px solid black;
+  padding: 0.3em;
+  border-radius: 10px;
+}
+
+@media (min-width: 768px) {
+    h2{
+        width: 35%;
+    }
+
+    .mod-info {
+        width: 10%;
+    }
+}

@@ -164,11 +164,22 @@ def cerrar_sesion(request):
     else:
         return JsonResponse({'mensaje': 'Método no permitido'}, status=405)
             
-    
-      
-def informacion_usuario(request, usuario_id):
-    usuario = Usuario.mostrar_informacion(usuario_id)
-    return render (request, 'informacion_usuario.html', {'usuario': usuario})
+@csrf_exempt       
+def informacion_usuario(request, email):
+  if request.method == 'GET':
+        usuario = Usuario.mostrar_informacion(email)
+        
+        usuario_dict = {
+            'nombre': usuario.nombre,
+            'apellido': usuario.apellido,
+            'email': usuario.email,
+            'telefono':usuario.telefono,
+            'direccion':usuario.direccion
+        }
+        
+        return JsonResponse(usuario_dict)  # Devuelve los datos del usuario como JSON
+  else:
+        return JsonResponse({'error': 'Método no permitido'}, status=405)
 
 def actualizar_perfil(request, usuario_id):
     usuario = Usuario.objects.get(pk=usuario_id)

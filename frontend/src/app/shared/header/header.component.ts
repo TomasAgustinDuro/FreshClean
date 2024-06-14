@@ -13,6 +13,7 @@ import { Observable, Subscription, tap } from 'rxjs';
 })
 export class HeaderComponent implements OnInit {
   public isOnline: boolean | undefined; 
+  public email: string | null | undefined;
   private dataSubscription: Subscription | undefined;
 
   constructor(private authAPI: AuthService, private router: Router) {}

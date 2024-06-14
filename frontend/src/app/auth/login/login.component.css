@@ -103,6 +103,12 @@
     color: aliceblue;
   }
 
+  .soporte-usuario{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+
   @media (min-width: 768px) {
     .titulo-login {
       width: 30%;

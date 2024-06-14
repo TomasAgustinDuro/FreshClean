@@ -34,7 +34,7 @@ class Usuario(models.Model):
     
         if usuario and check_password(contrasenia, usuario.contrasenia) and usuario.is_online == False :
             usuario.is_online = True
-            usuario.save()  # Guardar el cambio en la base de datos
+            usuario.save() 
             return usuario
         return None
 
@@ -67,8 +67,8 @@ class Usuario(models.Model):
         return cls.objects.all()
     
     @classmethod
-    def mostrar_informacion(cls, usuario_id):
-        usuario =  cls.objects.filter(usuarioid = usuario_id).first()
+    def mostrar_informacion(cls, email):
+        usuario =  cls.objects.filter(email = email).first()
         return usuario
              
 class Categoria(models.Model): 
